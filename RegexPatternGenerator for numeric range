@@ -1,0 +1,30 @@
+        private string regexPat_numRange(int maxNum)
+        {
+            string pat_1="", pat="";
+            string num_str = maxNum.ToString();
+
+            if (num_str.Length == 1)
+            {
+                return "[0-" + num_str[0]+"]";
+            }else if(num_str.Length > 1)
+            {
+                int index=0;
+                pat = "("+ (int.Parse(num_str[index]+"") > 1? "[0-" + (int.Parse(num_str[index] + "") - 1).ToString() + "]?":"")+"[0-9]{1,"+ (num_str.Length-1).ToString()+"})";
+
+                int substr_lenght = 1;
+
+                while(substr_lenght < num_str.Length)
+                {
+                    if(num_str[substr_lenght]!='0')
+                        pat_1 ="("+ num_str.Substring(index, substr_lenght) + "[0-" + (int.Parse(num_str[substr_lenght] + "") - 1).ToString() + "][0-9]{" + (num_str.Length - substr_lenght-1) + "})|"+pat_1;
+                    substr_lenght++;
+                }
+
+                //MessageBox.Show(pat_1 + pat);
+                return  "("+num_str.ToString() +"|"+ pat_1 + pat+")";
+
+            }
+
+            return "";
+
+        }
